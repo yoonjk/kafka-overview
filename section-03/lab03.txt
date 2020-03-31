@@ -1,0 +1,44 @@
+# 3.2 Consumer template
+mkdir -p lab
+cd lab
+ls -al
+ls -al
+
+cp /opt/kt-lab/template/*  .
+mv user-consumer.yaml  user1-consumer.yaml
+
+# vi editor file open
+vi user1-consumer.yaml
+
+문자열 변경
+1,$ s/user-consumer/user0-consumer/g
+1,$ s/kafka-topic-user/kafka-topic-user1/g
+
+kubectl exec kafka-client  --  /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --list
+
+# 3.3 Consumer
+# consumer Pod 생성
+kubectl apply  -f user1-consumer.yaml
+
+kubectl get pods -l app=user1-consumer
+
+# 3.4.	Consumer Log
+kubectl logs -f user1-consumer-79d5487489-l5854
+
+# 3.5 producer
+http://169.56.115.157:30975/swagger-ui.html
+kubectl logs -f user1-consumer-655dcc5d5-85pkq
+kubectl get pods
+kubectl logs -f user1-consumer-6964f465dc-gd5t6
+kubectl scale deployment user1-consumer   --replicas=2
+kubectl get pods -l app=user1-consumer
+kubectl get po
+
+
+cu
+ibm
+star
+cloud
+cncf
+ai
+blockchain

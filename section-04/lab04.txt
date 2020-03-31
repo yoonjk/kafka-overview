@@ -1,0 +1,25 @@
+
+kubectl exec kafka-client  --  /usr/bin/kafka-consumer-groups  --bootstrap-server kafka:9092  --group test-group  --describe
+
+kubectl exec kafka-client -- /usr/bin/kafka-topics --zookeeper kt-kafka-zookeeper:2181 --topic testuser1 --alter --partitions 2
+
+kubectl get pods -l app=user1-consumer
+
+kubectl logs -f  user1-consumer-6964f465dc-2t9xh
+
+# 4.2
+kubectl exec kafka-client -- /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --topic testuser1 --alter --partitions 3
+
+kubectl get pods -l app=user1-consumer
+
+kubectl exec kafka-client -- /usr/bin/kafka-consumer-groups --bootstrap-server kafka:9092 --group test-group –describe
+
+kubectl scale deployment user1-consumer  --replicas=3
+
+kubectl get pods -l app=user1-consumer
+
+kubectl logs -f user1-consumer-6964f465dc-h6p5n
+
+kubectl get pods -l app=user1-consumer
+kubectl scale deployment user1-consumer  --replicas=4
+kubectl get pods -l app=user1-consumer

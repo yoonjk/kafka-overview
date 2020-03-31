@@ -1,0 +1,7 @@
+
+
+kubectl exec kafka-client  --  /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --list
+
+kubectl exec kafka-client -- /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --topic testuser1 --create --partitions 1 --replication-factor 3
+
+kubectl exec kafka-client  --  /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --list

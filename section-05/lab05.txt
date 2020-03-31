@@ -1,0 +1,19 @@
+# 5.1
+kubectl delete  -f user1-consumer.yaml
+kubectl get po  -l app=user1-consumer
+kubectl exec kafka-client -- /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --topic testuser1 –delete
+
+kubectl exec kafka-client -- /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --topic testuser1 --create --partitions 1 --replication-factor 3
+
+kubectl exec kafka-client -- /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --list
+
+kubectl scale deployment user1-consumer   --replicas=3
+
+mv user-consumer-other.yaml   user1-consumer-other.yaml
+vi  user1-consumer-other.yaml
+
+kubectl  apply -f user1-consumer.yaml
+kubectl scale deployment user1-consumer   --replicas=3
+
+kubectl  apply -f user1-consumer-other.yaml
+kubectl scale deployment user1-consumer-other  --replicas=2
