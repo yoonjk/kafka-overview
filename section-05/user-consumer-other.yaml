@@ -36,7 +36,7 @@ spec:
           valueFrom:
             configMapKeyRef:
               name: kafka-topic-config
-              key: kafka-topic-user0
+              key: kafka-topic-user
         - name: CLIENT_ID_PREFIX
           valueFrom:
             configMapKeyRef:
