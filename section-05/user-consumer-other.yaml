@@ -31,22 +31,11 @@ spec:
             configMapKeyRef:
               name: kafka-config
               key: kafka-broker-port
-
         - name: TOPIC_NAME
           valueFrom:
             configMapKeyRef:
               name: kafka-topic-config
               key: kafka-topic-user
-        - name: CLIENT_ID_PREFIX
-          valueFrom:
-            configMapKeyRef:
-              name: kafka-config
-              key: clientId-prefix
-        - name: KAFKA_LISTENER_CONTAINERFACTORY
-          valueFrom:
-            configMapKeyRef:
-              name: kafka-config
-              key: containerFactory
         - name: CONSUMER_GROUP_ID
           valueFrom: 
             configMapKeyRef:
