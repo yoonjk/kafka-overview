@@ -1,9 +1,29 @@
+# 6.1.	Kafka Source Connector
+
 POSTGRES_POD=`kubectl get pods -l app=postgres -o jsonpath='{.items[0].metadata.name}'`
+
 kubectl exec $POSTGRES_POD -it -- psql -U postgres
+
 \l
 \c postgres
 
-CREATE TABLE accounts(id SERIAL PRIMARY KEY  NOT NULL, name VARCHAR(255));
+# 6.2.	Kafka Sink Connector
+POSTGRES_L_POD=`kubectl get pods -l app=postgres-legacy -o jsonpath='{.items[0].metadata.name}'`
 
-insert into user1 (name) values (‘ibm’)
+kubectl exec $POSTGRES_L_POD -it -- psql -U postgres
+\l
+\c postgres
+
+# 6.3.	Kafka Source/Sink Connect Test
+CREATE TABLE user00(id SERIAL PRIMARY KEY  NOT NULL, name VARCHAR(255));
+
+insert into user00 (name) values (‘ibm’);
+
+kubectl exec  kafka-client -it -- /usr/bin/kafka-console-consumer --topic postgres_source_user00  --bootstrap-server kafka:9092 --from-beginning
+
+# legacy db 연결
+kubectl exec $POSTGRES_L_POD -it -- psql -U postgres
+\c postgres
+\dt
+select * from postgres_source_user00;
 

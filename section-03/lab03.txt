@@ -1,37 +1,37 @@
 # 3.2 Consumer template
-mkdir -p lab
-cd lab
+
+git clone https://github.com/yoonjk/kafka-overview.git
+
+cd kafka-overview/section-03
 ls -al
-ls -al
+ 
+# vi editor file open for mac user
+vi user01-consumer.yaml
 
-cp /opt/kt-lab/template/*  .
-mv user-consumer.yaml  user1-consumer.yaml
+# mac user 문자열 변경
+1,$ s/user-consumer/user01-consumer/g
+1,$ s/kafka-topic-user/kafka-topic-user01/g
 
-# vi editor file open
-vi user1-consumer.yaml
-
-문자열 변경
-1,$ s/user-consumer/user0-consumer/g
-1,$ s/kafka-topic-user/kafka-topic-user1/g
+# windows 사용자는 opensource 에디터로 문자열 변경
 
 kubectl exec kafka-client  --  /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --list
 
 # 3.3 Consumer
 # consumer Pod 생성
-kubectl apply  -f user1-consumer.yaml
+kubectl apply  -f user01-consumer.yaml
 
-kubectl get pods -l app=user1-consumer
+kubectl get pods -l app=user01-consumer
 
 # 3.4.	Consumer Log
-kubectl logs -f user1-consumer-79d5487489-l5854
+kubectl logs -f user01-consumer-79d5487489-l5854
 
 # 3.5 producer
 http://169.56.85.37:31106/swagger-ui.html
-kubectl logs -f user1-consumer-655dcc5d5-85pkq
+kubectl logs -f user01-consumer-655dcc5d5-85pkq
 kubectl get pods
-kubectl logs -f user1-consumer-6964f465dc-gd5t6
-kubectl scale deployment user1-consumer   --replicas=2
-kubectl get pods -l app=user1-consumer
+kubectl logs -f user01-consumer-6964f465dc-gd5t6
+kubectl scale deployment user01-consumer   --replicas=2
+kubectl get pods -l app=user01-consumer
 kubectl get po
 
 
