@@ -95,7 +95,7 @@ kafka:
 ## If the Kafka Chart is disabled a URL and port are required to connect
 ## e.g. gnoble-panther-cp-schema-registry:8081
 cp-schema-registry:
-  url: "my-schema-cp-schema-registry:8081"
+  url: "http://my-schema-cp-schema-registry:8081"
 
 ## List of volumeMounts for connect server container
 ## ref: https://kubernetes.io/docs/concepts/storage/volumes/
