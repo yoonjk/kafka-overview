@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: telegraf-config
+data:
+  telegraf.conf: |+
+    [[inputs.burrow]]
+      servers = ["http://burrow:8000"]
+      topics_exclude = [ "__consumer_offsets" ]
+      groups_exclude = ["console-*"]
+
+    [[outputs.elasticsearch]]
+      urls = [ "http://elasticsearch:9200" ]
+      timeout = "5s"
+      enable_sniffer = false
+      health_check_interval = "10s"
+      index_name = "burrow-%Y.%m.%d"
+      manage_template = false

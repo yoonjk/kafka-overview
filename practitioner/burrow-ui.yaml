@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: burrow-ui
+  labels:
+    app: burrow-ui
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: burrow-ui
+  template:
+    metadata:
+      labels:
+        app: burrow-ui
+    spec:
+      containers:
+      - name: burrow-ui
+        image: nexweb1/burrow-ui:0.1
+        ports:
+        - containerPort: 3000
+        env:
+        - name: BURROW_HOME
+          value: http://burrow:8000/v3/kafka

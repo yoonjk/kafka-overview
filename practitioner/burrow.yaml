@@ -1,0 +1,34 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: burrow
+  labels:
+    k8s-app: burrow
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: burrow
+  template:
+    metadata:
+      labels:
+        k8s-app: burrow
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+    spec:
+      containers:
+      - name: burrow
+        image: nexweb1/burrow:0.74
+        ports:
+        - name: api
+          containerPort: 8000
+        readinessProbe:
+          httpGet:
+            path: /burrow/admin
+            port: 8000
+        livenessProbe:
+          httpGet:
+            path: /burrow/admin
+            port: 8000
+

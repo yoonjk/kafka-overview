@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: burrow-exporter
+  labels:
+    app: burrow-exporter
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: burrow-exporter
+  template:
+    metadata:
+      labels:
+        app: burrow-exporter
+    spec:
+      containers:
+      - name: burrow-exporter
+        image: nexweb1/burrow-exporter:0.2
+        ports:
+        - containerPort: 8080
+        env:
+        - name: BURROW_ADDR
+          value: http://burrow:8000
+        - name: METRICS_ADDR
+          value: burrow-exporter:8080
+        - name: INTERVAL
+          value: "30"
+        - name: API_VERSION
+          value: "3"

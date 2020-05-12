@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: burrow-dashboard
+  labels:
+    k8s-app: burrow-dashboard
+spec:
+  selector:
+    k8s-app: burrow-dashboard
+  ports:
+    - port: 80

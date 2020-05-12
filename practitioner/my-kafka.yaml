@@ -142,6 +142,9 @@ external:
   type: NodePort
   # annotations:
   #  service.beta.kubernetes.io/openstack-internal-load-balancer: "true"
+  # Labels to be added to external services
+  # labels:
+  #  aLabel: "value"
   dns:
     useInternal: false
     useExternal: true
@@ -175,8 +178,9 @@ podDisruptionBudget: {}
 ## ref: https://kafka.apache.org/documentation/#brokerconfigs
 ##
 configurationOverrides:
-  "confluent.support.metrics.enable": false  # Disables confluent metric submission
-  # "auto.leader.rebalance.enable": true
+  "confluent.support.metrics.enable": true  # Disables confluent metric submission
+  "auto.leader.rebalance.enable": true
+  "delete.topic.enable": true
   # "auto.create.topics.enable": true
   # "controlled.shutdown.enable": true
   # "controlled.shutdown.max.retries": 100
@@ -247,12 +251,12 @@ jmx:
     ## To allow all metrics through (warning its crazy excessive) comment out below `overrideConfig` and set
     ## `whitelistObjectNames: []`
     overrideConfig: {}
-      # jmxUrl: service:jmx:rmi:///jndi/rmi://127.0.0.1:5555/jmxrmi
-      # lowercaseOutputName: true
-      # lowercaseOutputLabelNames: true
-      # ssl: false
-      # rules:
-      # - pattern: ".*"
+      #jmxUrl: service:jmx:rmi:///jndi/rmi://127.0.0.1:5555/jmxrmi
+      #lowercaseOutputName: true
+      #lowercaseOutputLabelNames: true
+      #ssl: false
+      #rules:
+      #- pattern: ".*"
 
     ## If you would like to supply your own ConfigMap for JMX metrics, supply the name of that
     ## ConfigMap as an `overrideName` here.
@@ -365,13 +369,13 @@ prometheus:
 
   operator:
     ## Are you using Prometheus Operator?
-    enabled: true
+    enabled: false
 
     serviceMonitor:
       # Namespace in which to install the ServiceMonitor resource.
       namespace: monitoring
       # Use release namespace instead
-      releaseNamespace: true
+      releaseNamespace: false
 
       ## Defaults to whats used if you follow CoreOS [Prometheus Install Instructions](https://github.com/coreos/prometheus-operator/tree/master/helm#tldr)
       ## [Prometheus Selector Label](https://github.com/coreos/prometheus-operator/blob/master/helm/prometheus/templates/prometheus.yaml#L65)
@@ -381,12 +385,12 @@ prometheus:
 
     prometheusRule:
       ## Add Prometheus Rules?
-      enabled: true
+      enabled: false
 
       ## Namespace in which to install the PrometheusRule resource.
       namespace: monitoring
       # Use release namespace instead
-      releaseNamespace: true
+      releaseNamespace: false
 
       ## Defaults to whats used if you follow CoreOS [Prometheus Install Instructions](https://github.com/coreos/prometheus-operator/tree/master/helm#tldr)
       ## [Prometheus Selector Label](https://github.com/coreos/prometheus-operator/blob/master/helm/prometheus/templates/prometheus.yaml#L65)
@@ -505,4 +509,4 @@ zookeeper:
   #     - topologyKey: "kubernetes.io/hostname"
   #       labelSelector:
   #         matchLabels:
-  #           release: zookeeper
+  #           release: zookeeperj

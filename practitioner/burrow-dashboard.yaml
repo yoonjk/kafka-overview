@@ -1,0 +1,24 @@
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: burrow-dashboard
+  labels:
+    k8s-app: burrow-dashboard
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      k8s-app: burrow-dashboard
+  template:
+    metadata:
+      labels:
+        k8s-app: burrow-dashboard
+    spec:
+      containers:
+      - name: burrow-dashboard
+        image: joway/burrow-dashboard:latest
+        env:
+          - name: BURROW_BACKEND
+            value: http://burrow:8000
+        ports:
+        - containerPort: 80

@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: burrow
+  labels:
+    k8s-app: burrow
+spec:
+  selector:
+    k8s-app: burrow
+  ports:
+  - name: api
+    port: 8000

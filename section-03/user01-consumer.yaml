@@ -1,0 +1,48 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user01-consumer
+  labels:
+    app: user01-consumer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user01-consumer
+  template:
+    metadata:
+      labels:
+        app: user01-consumer
+    spec:
+      containers:
+      - name: consumer
+        image: nexweb1/kafka-consumer:a28
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8070
+        env:
+        - name: KAFKA_BROKER
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-config
+              key: kafka-broker
+        - name: KAFKA_BROKER_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-config
+              key: kafka-broker-port
+        - name: TOPIC_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-topic-config
+              key: kafka-topic-user01
+        - name: CONSUMER_GROUP_ID
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-config
+              key: consumer-group-id-1
+        - name: MESSAGE_PER_REQUEST
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-config
+              key: message-per-request
