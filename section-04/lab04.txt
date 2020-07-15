@@ -1,7 +1,7 @@
 
 kubectl exec kafka-client  --  /usr/bin/kafka-consumer-groups  --bootstrap-server kafka:9092  --group test-group  --describe
 
-kubectl exec kafka-client -- /usr/bin/kafka-topics --zookeeper kt-kafka-zookeeper:2181 --topic testuser01 --alter --partitions 2
+kubectl exec kafka-client -- /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --topic testuser01 --alter --partitions 2
 
 kubectl get pods -l app=user01-consumer
 

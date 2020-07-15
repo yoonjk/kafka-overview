@@ -1,18 +1,18 @@
-apiVersion: apps/v1beta2
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: burrow
   labels:
-    k8s-app: burrow
+    app: burrow
 spec:
   replicas: 1
   selector:
     matchLabels:
-      k8s-app: burrow
+      app: burrow
   template:
     metadata:
       labels:
-        k8s-app: burrow
+        app: burrow
       annotations:
         prometheus.io/scrape: "true"
         prometheus.io/port: "8000"
@@ -31,4 +31,3 @@ spec:
           httpGet:
             path: /burrow/admin
             port: 8000
-

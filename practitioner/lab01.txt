@@ -7,3 +7,12 @@ helm repo update
 git clone https://github.com/confluentinc/cp-helm-charts.git
 
 git clone https://github.com/yoonjk/kafka-overview.git
+
+# install kafka
+helm install --name kafka -f my-kafka.values incubator/kafka
+
+# install schema-registry
+helm install --name my-schema -f my-schema.yaml ./cp-schema-registry
+
+# install kafka-connect
+helm install --name my-connect -f my-connect.yaml ./cp-kafka-connect
