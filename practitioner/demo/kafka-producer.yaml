@@ -1,0 +1,45 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kafka-producer
+  labels:
+    app: kafka-producer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kafka-producer
+  template:
+    metadata:
+      labels:
+        app: kafka-producer
+    spec:
+      containers:
+      - name: producer
+        image: nexweb1/kafka-producer:22
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8060
+        env:
+        - name: KAFKA_BROKER
+          valueFrom: 
+            configMapKeyRef:
+              name: kafka-config
+              key: kafka-broker
+        - name: KAFKA_BROKER_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-config
+              key: kafka-broker-port
+
+        - name: TOPIC_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-config
+              key: kafka-topic-name
+        - name: MESSAGE_PER_REQUEST
+          valueFrom:
+            configMapKeyRef:
+              name: kafka-config
+              key: message-per-request

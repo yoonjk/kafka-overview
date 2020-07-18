@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: burrow-dashboard
   labels:
-    k8s-app: burrow-dashboard
+    app: burrow-dashboard
 spec:
   replicas: 1
   selector:

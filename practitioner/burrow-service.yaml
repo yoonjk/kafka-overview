@@ -5,6 +5,7 @@ metadata:
   labels:
     k8s-app: burrow
 spec:
+  type: LoadBalancer
   selector:
     k8s-app: burrow
   ports:
