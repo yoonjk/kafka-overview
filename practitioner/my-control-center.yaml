@@ -21,7 +21,7 @@ imagePullSecrets:
 serviceHttpPort: 9021
 
 ## Control Center properties
-## ref: 
+## ref:
 configurationOverrides:
   "replication.factor": "3"
   # "internal.topics.replication": "1"
@@ -90,14 +90,14 @@ kafka:
 ## If the Kafka Chart is disabled a URL and port are required to connect
 ## e.g. gnoble-panther-cp-schema-registry:8081
 cp-schema-registry:
-  url: "my-schema-cp-schema-registry:8081"
+  url: "http://my-schema-cp-schema-registry:8081"
 
 cp-kafka-connect:
-  url: "my-connect-cp-kafka-connect:8083"
+  url: "http://my-connect-cp-kafka-connect:8083"
 
 cp-ksql-server:
   url: ""
 
 cp-zookeeper:
   ## If the Zookeeper Chart is disabled a URL and port are required to connect
-  url: "kafka-zookeeper:2181"  
+  url: "http://kafka-zookeeper:2181"
