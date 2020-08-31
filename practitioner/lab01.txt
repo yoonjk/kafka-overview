@@ -19,3 +19,19 @@ helm install --name my-connect -f my-connect.yaml ./cp-kafka-connect
 
 # install kafka control-center
 helm install --name my-ctl-center -f my-control-center.yaml cp-control-center
+
+# Get pod name
+MY_CTL=$(kubectl get pods -l app=cp-control-center -o jsonpath="{.items[0].metadata.name}")
+
+# port forward
+kubectl port-forward $MY_CTL 9021
+
+# Open browser
+http://localhost:9021/clusters
+
+# Create namespace
+kubectl create ns kafka
+
+# Change current config
+kubectl config set-context $(kubectl config current-context) --namespace kafka
+

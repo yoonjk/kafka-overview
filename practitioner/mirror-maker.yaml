@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user00-mirror-maker
+spec:
+  selector:
+    matchLabels:
+      app: user00-mirror-maker
+  template:
+    metadata:
+      labels:
+        app: user00-mirror-maker
+    spec:
+      containers:
+      - name: kafka-mirror-maker
+        image: kafka-mirror-maker
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env:
+          - name: SOURCE_CLUSTER_BOOTSTRAP_SERVERS
+            value: "kafka.default:9092"
+          - name: SOURCE_CLUSTER_CONSUMER_GROUP
+            value: "testuser01"
+          - name: NUM_STREAMS
+            value: "1"
+          - name: WHITELISTED_TOPICS
+            value: "testuser00"
+          - name: SINK_CLUSTER_BOOTSTRAP_SERVERS
+            value: "dc-kafka.kafka:9092"
+          - name: LOG_LEVEL
+            value: WARN
