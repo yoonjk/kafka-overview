@@ -1,5 +1,6 @@
 # 6.1.	Kafka Source Connector
 
+# kubectl get pods -l app=postgres
 POSTGRES_POD=`kubectl get pods -l app=postgres -o jsonpath='{.items[0].metadata.name}'`
 
 kubectl exec $POSTGRES_POD -it -- psql -U postgres
@@ -8,13 +9,14 @@ kubectl exec $POSTGRES_POD -it -- psql -U postgres
 \c postgres
 
 # 6.2.	Kafka Sink Connector
+# kubectl get pods -l app=postgres-legacy
 POSTGRES_L_POD=`kubectl get pods -l app=postgres-legacy -o jsonpath='{.items[0].metadata.name}'`
 
 kubectl exec $POSTGRES_L_POD -it -- psql -U postgres
 \l
 \c postgres
 
-# 6.3.	Kafka Source/Sink Connect Test
+# 6.3. Test CDC from Postgres to Postgres using Kafka Connector
 CREATE TABLE user00(id SERIAL PRIMARY KEY  NOT NULL, name VARCHAR(255));
 
 insert into user00 (name) values (‘ibm’);
@@ -26,4 +28,61 @@ kubectl exec $POSTGRES_L_POD -it -- psql -U postgres
 \c postgres
 \dt
 select * from postgres_source_user00;
+
+# 6.4.MySQL Sink Connector
+kubectl exec -it kafka-client -- \
+curl -X POST  http://mysql-connect:8083/connectors -H "Content-Type: application/json" -d '
+{
+  "name": "mysql_sink_user01",
+  "config": {
+    "connector.class":"io.confluent.connect.jdbc.JdbcSinkConnector",
+    "tasks.max":"1",
+    "connection.url":"jdbc:mysql://mysql:3306/testdb",
+    "connection.user": "root",
+    "connection.password": "passw0rd",
+    "poll.interval.ms": "3600",
+    "table.poll.interval.ms": "5000",
+    "topics.regex": "postgres_source_user01",
+    "auto.create": "true",
+    "errors.tolerance": "all",
+    "errors.log.enable": true,
+    "errors.log.include.messages": true
+  }
+}
+'
+
+kubectl exec -it kafka-client -- \
+curl -X GET http://mysql-connect:8083/connectors -H "Content-Type: application/json"
+
+POSTGRES_POD=`kubectl get pods -l app=postgres -o jsonpath='{.items[0].metadata.name}'`
+or
+POSTGRES_POD=$(kubectl get pods -l app=postgres -o jsonpath='{.items[0].metadata.name}')
+
+# MySQL pod name : mysql-7594c6d5f5-klw2t
+
+kubectl exec $POSTGRES_POD -it -- psql -U postgres
+
+\l
+\c postgres
+또는
+\c
+
+insert into user01 (name) values (‘user00-01’);
+insert into user01 (name) values (‘user00-02’);
+insert into user01 (name) values (‘user00-03’);
+
+MYSQL_POD=$(kubectl get pods -l app=mysql -o jsonpath='{.items[0].metadata.name}') 
+
+
+show databases;
+
+use testdb;
+
+select * from postgres_source_user00;
+
+
+
+
+
+
 
