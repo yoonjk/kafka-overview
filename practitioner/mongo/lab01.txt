@@ -1,0 +1,11 @@
+0. Get root password
+export MONGODB_ROOT_PASSWORD=$(kubectl get secret --namespace kafka mongo-mongodb -o jsonpath="{.data.mongodb-root-password}" | base64 --decode)
+
+1. Get password
+export MONGODB_PASSWORD=$(kubectl get secret --namespace kafka mongo-mongodb -o jsonpath="{.data.mongodb-password}" | base64 --decode)
+
+2. connect pod
+kubectl run --namespace kafka mongo-mongodb-client --rm --tty -i --restart='Never' --image docker.io/bitnami/mongodb:4.4.0-debian-10-r0 --command -- bash
+
+3. connect mongo
+mongo admin --host "mongo-mongodb-0.mongo-mongodb-headless.kafka.svc.cluster.local,mongo-mongodb-1.mongo-mongodb-headless.kafka.svc.cluster.local," --authenticationDatabase admin -u root -p $MONGODB_ROOT_PASSWORD
