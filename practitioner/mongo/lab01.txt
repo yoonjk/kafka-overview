@@ -1,11 +1,24 @@
-0. Get root password
+1. helm install
+helm install --name mongo -f mongo-values.yaml bitnami/mongodb
+
+2. Get root password
 export MONGODB_ROOT_PASSWORD=$(kubectl get secret --namespace kafka mongo-mongodb -o jsonpath="{.data.mongodb-root-password}" | base64 --decode)
 
-1. Get password
+3. Get password
 export MONGODB_PASSWORD=$(kubectl get secret --namespace kafka mongo-mongodb -o jsonpath="{.data.mongodb-password}" | base64 --decode)
 
-2. connect pod
+4. connect pod
 kubectl run --namespace kafka mongo-mongodb-client --rm --tty -i --restart='Never' --image docker.io/bitnami/mongodb:4.4.0-debian-10-r0 --command -- bash
 
 3. connect mongo
 mongo admin --host "mongo-mongodb-0.mongo-mongodb-headless.kafka.svc.cluster.local,mongo-mongodb-1.mongo-mongodb-headless.kafka.svc.cluster.local," --authenticationDatabase admin -u root -p $MONGODB_ROOT_PASSWORD
+
+4. List topics
+   kubectl exec kafka-client -it  -- /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --list
+
+$ mongo "mongodb+srv://MONGODB_HOST/test"  --username MONGODB_USER
+# create database inventory and switch to it
+> use inventory;
+# creating collection
+> db.createCollection('phones');
+
