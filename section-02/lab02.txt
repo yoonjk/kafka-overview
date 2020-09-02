@@ -10,9 +10,8 @@ kubectl exec kafka-client  -- /usr/bin/kafka-topics --zookeeper kafka-zookeeper:
 kubectl exec kafka-client  -- /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --list --topic testuser01 
 
 # 2.3. Partition/Replication
+# my topic: testuser00
+kubectl exec -it kafka-client -- /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --describe --topic testuser01
 
+-- All topics
 kubectl exec -it kafka-client -- /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --describe
-또는
-kubectl exec -it kafka-client -- /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --describe --testuser01
-
-

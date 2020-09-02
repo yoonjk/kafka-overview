@@ -4,15 +4,16 @@ git clone https://github.com/yoonjk/kafka-overview.git
 
 cd kafka-overview/section-03
 ls -al
- 
-# vi editor file open for mac user
+
+# copy user-consumer.yaml user01-consumer.yaml
+# windows 사용자는 opensource 에디터로 문자열 변경
+
+# editor file open for macbook user
 vi user01-consumer.yaml
 
 # mac user 문자열 변경
 1,$ s/user-consumer/user01-consumer/g
 1,$ s/kafka-topic-user/kafka-topic-user01/g
-
-# windows 사용자는 opensource 에디터로 문자열 변경
 
 kubectl exec kafka-client  --  /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --list
 
@@ -26,11 +27,16 @@ kubectl get pods -l app=user01-consumer
 kubectl logs -f user01-consumer-79d5487489-l5854
 
 # 3.5 producer
-http://169.56.85.37:31106/swagger-ui.html
+# Open browser 
+http://169.56.85.37:32240/swagger-ui.html
 kubectl logs -f user01-consumer-655dcc5d5-85pkq
 kubectl get pods
 kubectl logs -f user01-consumer-6964f465dc-gd5t6
+
+# Scale pod
 kubectl scale deployment user01-consumer   --replicas=2
+
+# Get Pod
 kubectl get pods -l app=user01-consumer
 kubectl get po
 

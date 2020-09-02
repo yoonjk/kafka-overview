@@ -1,12 +1,12 @@
 # 5.1
 kubectl delete  -f user01-consumer.yaml
 kubectl get po  -l app=user01-consumer
-kubectl exec kafka-client -- /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --topic testuser01 –delete
+kubectl exec kafka-client -- /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --topic testuser01 --delete
 
 kubectl exec kafka-client -- /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --topic testuser01 --create --partitions 1 --replication-factor 3
 
 kubectl exec kafka-client -- /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --list
-
+kubectl apply  -f user01-consumer.yaml
 kubectl scale deployment user01-consumer   --replicas=3
 
 mv user-consumer-other.yaml   user01-consumer-other.yaml

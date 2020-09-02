@@ -12,7 +12,7 @@ kubectl exec kafka-client -- /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2
 
 kubectl get pods -l app=user01-consumer
 
-kubectl exec kafka-client -- /usr/bin/kafka-consumer-groups --bootstrap-server kafka:9092 --group test-group –describe
+kubectl exec kafka-client -- /usr/bin/kafka-consumer-groups --bootstrap-server kafka:9092 --group test-group --describe
 
 kubectl scale deployment user01-consumer  --replicas=3
 
