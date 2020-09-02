@@ -3,11 +3,10 @@ apiVersion: v1
 metadata:
   name: burrow
   labels:
-    k8s-app: burrow
+    app: burrow
 spec:
-  type: LoadBalancer
   selector:
-    k8s-app: burrow
+    app: burrow
   ports:
   - name: api
     port: 8000

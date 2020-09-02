@@ -3,7 +3,7 @@
 # ------------------------------------------------------------------------------
 
 ## The StatefulSet installs 3 pods by default
-replicas: 3
+replicas: 4
 
 ## The kafka image repository
 image: "confluentinc/cp-kafka"
@@ -17,13 +17,13 @@ imagePullPolicy: "IfNotPresent"
 
 ## Configure resource requests and limits
 ## ref: http://kubernetes.io/docs/user-guide/compute-resources/
-resources: {}
-  # limits:
-  #   cpu: 200m
-  #   memory: 1536Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 1024Mi
+resources: 
+  limits:
+    cpu: 200m
+    memory: 1536Mi
+  requests:
+    cpu: 100m
+    memory: 1024Mi
 kafkaHeapOptions: "-Xmx1G -Xms1G"
 
 ## Optional Container Security context
