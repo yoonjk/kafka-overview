@@ -16,6 +16,9 @@ mongo admin --host "mongo-mongodb-0.mongo-mongodb-headless.kafka.svc.cluster.loc
 4. List topics
    kubectl exec kafka-client -it  -- /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --list
 
+5. Listener topic
+kubectl exec  kafka-client -- /usr/bin/kafka-console-consumer --topic testdb.user00  --bootstrap-server kafka:9092 --from-beginning
+
 $ mongo "mongodb+srv://MONGODB_HOST/test"  --username MONGODB_USER
 # create database inventory and switch to it
 > use inventory;

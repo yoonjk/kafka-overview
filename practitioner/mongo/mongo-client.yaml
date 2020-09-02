@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: mongo-client
+spec:
+  containers:
+  - name: mongo-client
+    image: docker.io/bitnami/mongodb:4.2.4-debian-10-r0
+    command:
+    - mongo
+    - admin
+    - --host
+    - mongo-mongodb
+    - --authenticationDatabase
+    - admin
+    - -u
+    - root
+    - -p
+    tty: true
