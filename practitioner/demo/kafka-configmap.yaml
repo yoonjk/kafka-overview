@@ -9,17 +9,6 @@ data:
 # consumer definition
   consumer-group-id-1: test-group
   consumer-group-id-2: sample-group
-  string-Serializer: org.apache.kafka.common.serialization.StringSerializer
-  avro-Serializer: org.apache.kafka.common.serialization.StringSerializer
+  key-string-serializer: org.apache.kafka.common.serialization.StringSerializer
+  value-string-serializer: org.apache.kafka.common.serialization.StringSerializer
   message-per-request: "10"
-  partition-no-0: "0"
-  partition-no-1: "1"
-  partition-no-2: "2"
-  partition-no-3: "3"
-  partition-no-4: "4"
-  partition-no-5: "5"
-  partition-no-6: "6"
-  partition-no-7: "7"
-  partition-no-8: "8"
-  partition-no-9: "9"
-  partition-no-10: "10"
