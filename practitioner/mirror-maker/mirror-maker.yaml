@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mirror-maker
+spec:
+  selector:
+    matchLabels:
+      app: mirror-maker
+  template:
+    metadata:
+      labels:
+        app: mirror-maker
+    spec:
+      containers:
+      - name: kafka-mirror-maker
+        image: nexweb1/kafka-mirror-maker:0.3
+        imagePullPolicy: IfNotPresent
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "500m"
+        env:
+          - name: SOURCE_CLUSTER_BOOTSTRAP_SERVERS
+            value: "kafka-headless:9092"
+          - name: SOURCE_CLUSTER_CONSUMER_GROUP
+            value: "testuser01"
+          - name: NUM_STREAMS
+            value: "1"
+          - name: WHITELISTED_TOPICS
+            value: "testuser00,testuser03"
+          - name: SINK_CLUSTER_BOOTSTRAP_SERVERS
+            value: "dc-kafka-headless:9092"
+          - name: LOG_LEVEL
+            value: INFO

@@ -1,0 +1,24 @@
+
+
+# source kafka cluster
+
+kubectl exec kafka-client  -- /usr/bin/kafka-topics  --zookeeper kafka-zookeeper:2181 --topic testuser00 --create --partitions 1 --replication-factor 3
+kubectl exec kafka-client  -- /usr/bin/kafka-topics  --zookeeper kafka-zookeeper:2181 --topic testuser03 --create --partitions 1 --replication-factor 3
+
+kubectl exec kafka-client  -it  -- kafka-conso-producer \
+> --broker-list kafka:9092 --topic testuser00 --property "parse.key=true" --property "key.separator=:"
+key1:{ "name": "Rob Walters", "Twitter" : "@RobsCranium" }
+key2:value2
+
+# target dc kafka cluster
+kubectl exec kafka-client  -- /usr/bin/kafka-topics  --zookeeper dc-kafka-zookeeper:2181 --topic testuser00 --create --partitions 1 --replication-factor 3
+kubectl exec kafka-client  -- /usr/bin/kafka-topics  --zookeeper dc-kafka-zookeeper:2181 --topic testuser03 --create --partitions 1 --replication-factor 3
+
+kubectl apply -f mirror-maker.yaml
+
+kubectl exec -it kafka-client -- \
+kafka-console-consumer --bootstrap-server kafka:9092 --topic testuser00 --property print.key=true --property key.separator=: --from-beginning
+
+result:
+key1:{ "name": "Rob Walters", "Twitter" : "@RobsCranium" }
+key2:value2
