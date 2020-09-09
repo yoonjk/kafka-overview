@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: replicator
+  lables:
+    app: replicator
+spec:
+  replicas: 1
+  selector: 
+    matchLabels:
+      app: replicator
+  template:
+    metadata:
+      labels:
+        app: replicator
+    spec:
+      containers:
+      - name: cp-enterprise-replicator
+        image: confluentinc/cp-enterprise-replicator:latest
+        ports:
+        - containerPort: 8082
+        env:
+        - name: CONNECT_BOOTSTRAP_SERVERS 
+          value: "kafka-headless:9092,dc-kafka-headless:9092"
+        - name: CONNECT_REST_PORT 
+          value: "8082"
+        - name: CONNECT_GROUP_ID 
+          value: "default"
+        - name: CONNECT_CONFIG_STORAGE_TOPIC 
+          value: "default.config"
+        - name: CONNECT_OFFSET_STORAGE_TOPIC 
+          value: "default.offsets"
+        - name: CONNECT_STATUS_STORAGE_TOPIC 
+          value: "default.status"
+        - name: CONNECT_KEY_CONVERTER 
+          value: "org.apache.kafka.connect.json.JsonConverter"
+        - name: CONNECT_VALUE_CONVERTER 
+          value: "org.apache.kafka.connect.json.JsonConverter"
+        - name: CONNECT_INTERNAL_KEY_CONVERTER
+          value: "org.apache.kafka.connect.json.JsonConverter"
+        - name: CONNECT_INTERNAL_VALUE_CONVERTER
+          value: "org.apache.kafka.connect.json.JsonConverter"
+        - name: CONNECT_REST_ADVERTISED_HOST_NAME 
+          value: "kafka-headless"
+        - name: CONNECT_PLUGIN_PATH 
+          value: "/usr/share/java"
+        - name: CONNECT_LOG4J_ROOT_LOGLEVEL 
+          value: INFO
+        - name: TOPIC_WHITELIST
+          value: "testuser02"
+        - name: CONNECT_LOG4J_LOGGERS 
+          value: "org.apache.zookeeper=ERROR,org.I0Itec.zkclient=ERROR,org.reflections=ERROR"
