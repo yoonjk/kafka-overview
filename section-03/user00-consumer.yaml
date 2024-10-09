@@ -8,11 +8,11 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app: user00-consumer
+      app: user01-consumer
   template:
     metadata:
       labels:
-        app: user00-consumer
+        app: user01-consumer
     spec:
       containers:
       - name: consumer

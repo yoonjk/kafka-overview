@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kafka-topic-config
+data:
+  company-name: ibm
+  default-partitioner: org.apache.kafka.clients.producer.internals.DefaultPartitioner
+  custom-partitioner: com.ibm.lab.partition.CustomPartitioner
+  kafka-topic-user00: testuser00
+  kafka-topic-user01: testuser01
+
+  
