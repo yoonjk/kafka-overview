@@ -15,7 +15,7 @@ vi user01-consumer.yaml
 1,$ s/user-consumer/user01-consumer/g
 1,$ s/kafka-topic-user/kafka-topic-user01/g
 
-kubectl exec kafka-client  --  /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --list
+kubectl exec kafka-cli  --  kafka-topics --bootstrap-server  kafka-headless:9092 --list
 
 # 3.3 Consumer
 # consumer Pod 생성

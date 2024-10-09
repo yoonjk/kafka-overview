@@ -38,7 +38,7 @@ kubectl exec $POSTGRES_L_POD -it -- psql -U postgres
 
 insert into user00 (name) values ('user00-01');
 
-kubectl exec  kafka-client -it -- /usr/bin/kafka-console-consumer --topic postgres_source_user00  --bootstrap-server kafka:9092 --from-beginning
+kubectl exec  kafka-cli -it -- /usr/bin/kafka-console-consumer --topic postgres_source_user00  --bootstrap-server kafka:9092 --from-beginning
 
 # legacy db 연결
 kubectl exec $POSTGRES_L_POD -it -- psql -U postgres
@@ -68,7 +68,7 @@ curl -X POST  http://kafka-connect:8083/connectors -H "Content-Type: application
 }
 '
 
-kubectl exec -it kafka-client -- \
+kubectl exec -it kafka-cli -- \
 curl -X GET http://mysql-connect:8083/connectors -H "Content-Type: application/json"
 
 POSTGRES_POD=`kubectl get pods -l app=postgres -o jsonpath='{.items[0].metadata.name}'`

@@ -1,18 +1,18 @@
 
-kubectl exec kafka-client  --  /usr/bin/kafka-consumer-groups  --bootstrap-server kafka:9092  --group test-group  --describe
+kubectl exec kafka-cli  -- kafka-consumer-groups  --bootstrap-server kafka-headless:9092  --group test-group  --describe
 
-kubectl exec kafka-client -- /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --topic testuser01 --alter --partitions 2
+kubectl exec kafka-cli -- kafka-topics --bootstrap-server kafka-headless:9092 --topic testuser01 --alter --partitions 2
 
 kubectl get pods -l app=user01-consumer
 
 kubectl logs -f  user01-consumer-6964f465dc-2t9xh
 
 # 4.2
-kubectl exec kafka-client -- /usr/bin/kafka-topics --zookeeper kafka-zookeeper:2181 --topic testuser01 --alter --partitions 3
+kubectl exec kafka-cli -- kafka-topics --bootstrap-server kafka-headless:9092 --topic testuser01 --alter --partitions 3
 
 kubectl get pods -l app=user01-consumer
 
-kubectl exec kafka-client -- /usr/bin/kafka-consumer-groups --bootstrap-server kafka:9092 --group test-group --describe
+kubectl exec kafka-cli -- kafka-consumer-groups --bootstrap-server kafka-headless:9092 --group test-group --describe
 
 kubectl scale deployment user01-consumer  --replicas=3
 
