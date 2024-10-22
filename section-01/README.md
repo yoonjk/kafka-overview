@@ -2,9 +2,9 @@
 
 ## Kafka Cluster 설치
 
-Kafka Cluster를 설치합니다.
+Kafka Cluster를 설치합니다.  
 ```bash
-kubectl apply -f kafka-local.yaml
+kubectl apply -f kafka-cluster.yaml
 ```
 
 ## Kafka Lab 
