@@ -1,18 +1,18 @@
 
 # 2.2.	Topic 목록 조회
-kubectl exec kafka-cli  -- kafka-topics --bootstrap-server kafka-headless:9092 --list
+kubectl exec kafka-client  -- kafka-topics --bootstrap-server kafka-headless:9092 --list
 
 # 2.2.	Topic 생성
-kubectl exec kafka-cli  -- kafka-topics --bootstrap-server  kafka-headless:9092 \
+kubectl exec kafka-client  -- kafka-topics.sh --bootstrap-server  kafka-headless:9092 \
 --topic testuser01 --create --partitions 1 --replication-factor 3
 
-kubectl exec kafka-cli  -- kafka-topics --bootstrap-server  kafka-headless:9092 --list
+kubectl exec kafka-client  -- kafka-topics.sh --bootstrap-server  kafka-headless:9092 --list
 
-kubectl exec kafka-cli  -- kafka-topics --bootstrap-server  kafka-headless:9092 --list --topic testuser01 
+kubectl exec kafka-client  -- kafka-topics.sh --bootstrap-server  kafka-headless:9092 --list --topic testuser01 
 
 # 2.3. Partition/Replication
 # my topic: testuser00
-kubectl exec -it kafka-cli -- kafka-topics --bootstrap-server  kafka-headless:9092 --describe --topic testuser01
+kubectl exec -it kafka-client -- kafka-topics.sh --bootstrap-server  kafka-headless:9092 --describe --topic testuser01
 
 -- All topics
-kubectl exec -it kafka-cli -- kafka-topics --bootstrap-server  kafka-headless:9092 --describe
+kubectl exec -it kafka-client -- kafka-topics..sh --bootstrap-server  kafka-headless:9092 --describe
